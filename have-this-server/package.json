@@ -1,0 +1,26 @@
+{
+  "name": "have-it",
+  "version": "1.0.0",
+  "description": "This is the server side app for the have it web application",
+  "main": "App.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon App.js"
+  },
+  "keywords": [
+    "have",
+    "it",
+    "web",
+    "app"
+  ],
+  "author": "Solomon Njobvu",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.13",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  }
+}
