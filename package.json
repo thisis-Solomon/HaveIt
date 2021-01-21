@@ -1,0 +1,29 @@
+{
+  "name": "haveit",
+  "version": "1.0.0",
+  "description": "setting eslint for the haveit web app",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-plugin-react": "^7.22.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thisis-Solomon/HaveIt.git"
+  },
+  "keywords": [
+    "haveit",
+    "web",
+    "app"
+  ],
+  "author": "Solomon Njobvu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thisis-Solomon/HaveIt/issues"
+  },
+  "homepage": "https://github.com/thisis-Solomon/HaveIt#readme"
+}
