@@ -1,35 +1,25 @@
-import { useState, useEffect, Fragment } from "react";
+import { useEffect, Fragment } from "react";
 import Product from "../Product";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../messages/LoadingBox";
 import ErrorMessage from "../messages/ErrorMessage";
+import { listProducts } from "../actions/productActions";
 
 function ProductsPage() {
-    const [products, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
+    const dispatch = useDispatch();
+    const productsList = useSelector((state) => state.productsList);
+    const { loading, error, products } = productsList;
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setIsLoading(true);
-                const { data } = await axios.get("/api/products");
-                setIsLoading(false);
-                setProducts(data);
-            } catch (error) {
-                setIsError(error.message);
-                setIsLoading(false);
-            }
-        };
-
-        fetchData();
+        dispatch(listProducts());
     }, []);
+
     return (
         <Fragment>
-            {isLoading ? (
+            {loading ? (
                 <LoadingBox></LoadingBox>
-            ) : isError ? (
-                <ErrorMessage variant='danger'>{isError}</ErrorMessage>
+            ) : error ? (
+                <ErrorMessage variant='danger'>{error}</ErrorMessage>
             ) : (
                 <div className='row center'>
                     {products.map((product) => (
