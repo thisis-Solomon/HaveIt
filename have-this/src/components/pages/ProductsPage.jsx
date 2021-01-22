@@ -17,7 +17,7 @@ function ProductsPage() {
     return (
         <Fragment>
             {loading ? (
-                <LoadingBox></LoadingBox>
+                <LoadingBox/>
             ) : error ? (
                 <ErrorMessage variant='danger'>{error}</ErrorMessage>
             ) : (
