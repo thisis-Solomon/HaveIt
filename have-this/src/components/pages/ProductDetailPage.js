@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { detailProduct } from "../actions/productActions";
@@ -16,10 +16,16 @@ function ProductDetailPage(props) {
         dispatch(detailProduct(productId));
     }, [dispatch, productId]);
 
+    // fn() for cart btn
+    const [qty, setQty] = useState(1);
+
+    const HandleAddToCart = () =>{
+        props.history.push(`/cart/${productId}?qty=${qty}`)
+    }
     return (
         <Fragment>
             {loading ? (
-                <LoadingBox></LoadingBox>
+                <LoadingBox />
             ) : error ? (
                 <ErrorMessage variant='danger'>{error}</ErrorMessage>
             ) : (
@@ -82,11 +88,48 @@ function ProductDetailPage(props) {
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <button className='primary block'>
-                                            Add to Cart
-                                        </button>
-                                    </li>
+                                    {product.countInStock > 0 && (
+                                        <>
+                                            <li>
+                                                <div className='row'>
+                                                    <div>Qty</div>
+                                                    <div>
+                                                        <select
+                                                            value={qty}
+                                                            onChange={(event) =>
+                                                                setQty(
+                                                                    event.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                        >
+                                                            {[
+                                                                ...Array(
+                                                                    product.countInStock
+                                                                ).keys(),
+                                                            ].map((x) => (
+                                                                <option
+                                                                    value={
+                                                                        x + 1
+                                                                    }
+                                                                >
+                                                                    {x + 1}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    className='primary block'
+                                                    onClick={HandleAddToCart}
+                                                >
+                                                    Add to Cart
+                                                </button>
+                                            </li>
+                                        </>
+                                    )}
                                 </ul>
                             </div>
                         </div>

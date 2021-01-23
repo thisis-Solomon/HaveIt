@@ -1,6 +1,7 @@
 /** @format */
 
 import { BrowserRouter, Route } from 'react-router-dom';
+import CartPage from './components/pages/CartPage';
 import ProductDetailPage from './components/pages/ProductDetailPage';
 import ProductsPage from './components/pages/ProductsPage';
 
@@ -20,6 +21,7 @@ function App() {
 					</div>
 				</header>
 				<main>
+					<Route path="/cart/:id?" component={CartPage}/>
 					<Route exact path='/' component={ProductsPage}/>
 					<Route path='/product/:id' component={ProductDetailPage}/>
 				</main>
