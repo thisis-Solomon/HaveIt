@@ -16,6 +16,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* ********************************************************* */
 /* Layout */
 
 .grid-container {
@@ -44,6 +45,7 @@ footer {
     background-color: rgb(5, 8, 19);
     color: #fff;
 }
+/* ********************************************************* */
 /* Common styles */
 a {
     text-decoration: none;
@@ -97,6 +99,8 @@ button.primary {
 button.block {
     width: 100%;
 }
+
+/* ********************************************************* */
 /* Header */
 
 header a {
@@ -110,12 +114,12 @@ a.brand {
     font-weight: bold;
 }
 
-.badge{
+.badge {
     background-color: #c0620a;
     color: #fff;
-    padding: .2rem .7rem;
+    padding: 0.2rem 0.7rem;
     border-radius: 50%;
-    margin-left: .2rem;
+    margin-left: 0.2rem;
     font-size: 1.5rem;
 }
 .row {
@@ -134,15 +138,24 @@ a.brand {
 .col-2 {
     flex: 2 1 50rem;
 }
+.min-30 {
+    min-width: 30rem;
+}
 /* Footer */
 
 .row.center {
     justify-content: center;
 }
 
+/* ************************************************************** */
+
 /* Img */
 img {
     border-radius: 0.5rem;
+}
+img.small {
+    max-width: 5rem;
+    width: 100%;
 }
 img.medium {
     max-width: 29rem;
@@ -152,6 +165,7 @@ img.large {
     width: 100%;
 }
 
+/* *************************************************************** */
 /* Card */
 .card {
     border: 0.1rem #c0c0c0 solid;
@@ -170,6 +184,7 @@ img.large {
     font-size: 2rem;
 }
 
+/* *************************************************************** */
 /* Rating */
 .rating span {
     color: #f0c040;
@@ -180,6 +195,7 @@ img.large {
     color: #404040;
 }
 
+/* *************************************************************** */
 /* Alert */
 
 .success {
