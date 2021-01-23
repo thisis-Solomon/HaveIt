@@ -35,7 +35,7 @@ function ProductDetailPage(props) {
                         <div className='col-2'>
                             <img
                                 className='large'
-                                src={product.images}
+                                src={product.image}
                                 alt={product.name}
                             />
                         </div>
