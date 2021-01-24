@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, removeItemFromCart } from "../actions/cartActions";
 import ErrorMessage from "../messages/ErrorMessage";
 
 const CartPage = (props) => {
@@ -20,7 +20,7 @@ const CartPage = (props) => {
     }, [dispatch, productId, qty]);
 
     const HandleRemoveFromCart = (id) => {
-        // Delete Action
+        dispatch(removeItemFromCart(id))
     };
 
     const HandleCheckout = () => {

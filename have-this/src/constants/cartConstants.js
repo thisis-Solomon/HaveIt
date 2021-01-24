@@ -1,1 +1,2 @@
 export const ADD_TO_ITEM = "ADD_TO_ITEM"
+export const REMOVE_ITEM_FROM_CART = "REMOVE_ITEM_FROM_CART"
