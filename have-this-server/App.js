@@ -1,5 +1,7 @@
 import express from "express";
 import data from "./data.js";
+import db from "./db.js";
+import userRoute from "./routers/userRouter.js";
 
 // variable constance
 const app = express();
@@ -27,6 +29,16 @@ app.get("/api/products/:id", (req, res) => {
     } else {
         res.status(404).send({ message: "Product not found" });
     }
+});
+
+app.use("/api/users", userRoute);
+
+// DATABASE
+db;
+
+// Error handler
+app.use((error, req, res, next) => {
+    res.status(500).send({ message: error.message });
 });
 
 // App listening
