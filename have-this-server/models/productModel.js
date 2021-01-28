@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema(
         numberOfReviews: { type: Number, required: true },
         description: { type: String, required: true },
     },
-    { timestamp: true }
+    { timestamps: true }
 );
 
 const Product = mongoose.model("Product", productSchema);

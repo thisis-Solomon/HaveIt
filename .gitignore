@@ -1,3 +1,4 @@
 have-this/node_modules
 have-this-server/node_modules
 node_modules/
+have-this-server/.env
