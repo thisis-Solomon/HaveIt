@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signin } from "../actions/userAction";
+import { register } from "../actions/userAction";
 import ErrorMessage from "../messages/ErrorMessage";
 import LoadingBox from "../messages/LoadingBox";
 
-const SigninPage = (props) => {
+const RegisterPage = (props) => {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const dispatch = useDispatch();
 
@@ -15,12 +17,16 @@ const SigninPage = (props) => {
         ? props.location.search.split("=")[1]
         : "/";
 
-    const userSignin = useSelector((state) => state.userSignin);
-    const { userInfo, loading, error } = userSignin;
+    const userRegister = useSelector((state) => state.userRegister);
+    const { userInfo, loading, error } = userRegister;
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(signin(email, password));
+        if (confirmPassword !== password) {
+            alert("Your first and the second password do not much");
+        } else {
+            dispatch(register(name, email, password));
+        }
     };
 
     useEffect(() => {
@@ -32,10 +38,21 @@ const SigninPage = (props) => {
     return (
         <div>
             <form className='form' onSubmit={handleSubmit}>
-                <h1>Sign in to have a convenient online shopping</h1>
+                <h1>Create an account and to have a convenient online shopping</h1>
                 {loading && <LoadingBox />}
                 {/* TODO: display the correct error meassage from the server */}
                 {/* {error && <ErrorMessage variant='danger'>{error}</ErrorMessage>} */}
+                <div>
+                    <label htmlFor='name'>Enter Name</label>
+                    <input
+                        type='name'
+                        id='name'
+                        placeholder='Enter Name'
+                        onChange={(event) => setName(event.target.value)}
+                        required
+                    />
+                </div>
+
                 <div>
                     <label htmlFor='email'>Email address</label>
                     <input
@@ -48,7 +65,7 @@ const SigninPage = (props) => {
                 </div>
 
                 <div>
-                    <label htmlFor='password'>Email address</label>
+                    <label htmlFor='password'>Enter Password</label>
                     <input
                         type='password'
                         id='password'
@@ -59,17 +76,30 @@ const SigninPage = (props) => {
                 </div>
 
                 <div>
+                    <label htmlFor='confirmPassword'>Confirm Password</label>
+                    <input
+                        type='password'
+                        id='confirmPassword'
+                        placeholder='Enter Password'
+                        onChange={(event) =>
+                            setConfirmPassword(event.target.value)
+                        }
+                        required
+                    />
+                </div>
+
+                <div>
                     <label />
                     <button className='primary' type='submit'>
-                        Sign In
+                        Register
                     </button>
                 </div>
 
                 <div>
                     <label />
                     <h4>
-                        New Customer?{" "}
-                        <Link to={`/register?rediect=${redirect}`}>Create your account</Link>
+                        Have already an account?{" "}
+                        <Link to={`/signin?rediect=${redirect}`}>Sign-In</Link>
                     </h4>
                 </div>
             </form>
@@ -77,4 +107,4 @@ const SigninPage = (props) => {
     );
 };
 
-export default SigninPage;
+export default RegisterPage;
