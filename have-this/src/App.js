@@ -4,6 +4,7 @@ import CartPage from "./components/pages/CartPage";
 import ProductDetailPage from "./components/pages/ProductDetailPage";
 import ProductsPage from "./components/pages/ProductsPage";
 import RegisterPage from "./components/pages/RegisterPage";
+import ShippingAdressPage from "./components/pages/ShippingAdressPage";
 import SigninPage from "./components/pages/SigninPage";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
                 <main>
                     <Route path='/register' component={RegisterPage} />
                     <Route path='/signin' component={SigninPage} />
+                    <Route path='/shipping' component={ShippingAdressPage} />
                     <Route path='/cart/:id?' component={CartPage} />
                     <Route exact path='/' component={ProductsPage} />
                     <Route path='/product/:id' component={ProductDetailPage} />

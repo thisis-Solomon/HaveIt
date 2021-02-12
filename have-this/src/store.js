@@ -5,7 +5,10 @@ import {
     productListReducer,
     productsDetailReducer,
 } from "./components/reducer/productReducer";
-import { userRegisterReducer, userSigninReducer } from "./components/reducer/userReducer";
+import {
+    userRegisterReducer,
+    userSigninReducer,
+} from "./components/reducer/userReducer";
 
 const initState = {
     userSignin: {
@@ -17,6 +20,9 @@ const initState = {
         cartItems: localStorage.getItem("cartItems")
             ? JSON.parse(localStorage.getItem("cartItems"))
             : [],
+        shippingAddress: localStorage.getItem("shippingAddress")
+            ? JSON.parse(localStorage.getItem("shippingAddress"))
+            : {},
     },
 };
 const reducer = combineReducers({
