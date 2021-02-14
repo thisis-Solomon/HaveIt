@@ -1,6 +1,7 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import Header from "./components/Header";
 import CartPage from "./components/pages/CartPage";
+import PaymentMethodPage from "./components/pages/PaymentMethodPage";
 import ProductDetailPage from "./components/pages/ProductDetailPage";
 import ProductsPage from "./components/pages/ProductsPage";
 import RegisterPage from "./components/pages/RegisterPage";
@@ -16,6 +17,7 @@ function App() {
                     <Route path='/register' component={RegisterPage} />
                     <Route path='/signin' component={SigninPage} />
                     <Route path='/shipping' component={ShippingAdressPage} />
+                    <Route path='/payment' component={PaymentMethodPage} />
                     <Route path='/cart/:id?' component={CartPage} />
                     <Route exact path='/' component={ProductsPage} />
                     <Route path='/product/:id' component={ProductDetailPage} />
