@@ -3,6 +3,7 @@ import db from "./db.js";
 import dotenv from 'dotenv'
 import productRoute from "./routers/productRouter.js";
 import userRoute from "./routers/userRouter.js";
+import orderRoute from "./routers/orderRoute.js";
 
 dotenv.config()
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended: true}))
 
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute)
+app.use('/api/orders', orderRoute)
 
 // DATABASE
 db;
