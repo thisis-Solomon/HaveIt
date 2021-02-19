@@ -50,7 +50,6 @@ const PaymentMethodPage = (props) => {
                             id='stripe'
                             name='paymentMethod'
                             required
-                            // checked
                             value='Stripe'
                             onChange={(event) =>
                                 setPaymentMethod(event.target.value)
