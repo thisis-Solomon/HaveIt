@@ -6,19 +6,19 @@ import CheckOutSteps from "../CheckOutSteps";
 const PaymentMethodPage = (props) => {
     const [paymentMethod, setPaymentMethod] = useState("Paypal");
 
-    const cart = useSelector(state => state.cart)
-    const {shippingAddress} = cart
+    const cart = useSelector((state) => state.cart);
+    const { shippingAddress } = cart;
 
-    if(!shippingAddress.address){
-        props.history.push('/shipping')
+    if (!shippingAddress.address) {
+        props.history.push("/shipping");
     }
 
     const dispatch = useDispatch();
     const handlePaymentSubmit = (event) => {
-        event.preventDefault()
+        event.preventDefault();
         dispatch(savePaymentMethod(paymentMethod));
 
-        props.history.push("./placeholder");
+        props.history.push("./placeorder");
     };
     return (
         <div>

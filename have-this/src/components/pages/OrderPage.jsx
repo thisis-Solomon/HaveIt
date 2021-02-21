@@ -1,53 +1,27 @@
-import CheckOutSteps from "../CheckOutSteps";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createOrder } from "../actions/orderActions";
 import { useEffect } from "react";
-import { CREATE_ORDER_RESET } from "../../constants/orderConstants";
 import ErrorMessage from "../messages/ErrorMessage";
 import LoadingBox from "../messages/LoadingBox";
+import { detailsOrder } from "../actions/orderActions";
 
-const PlaceHolderPage = (props) => {
-    const cart = useSelector((state) => state.cart);
-    const userSignin = useSelector((state) => state.userSignin);
-    // const { userInfo } = userSignin;
-
-    // if (!userInfo) {
-    //     props.history.push("/signin");
-    // }
-
-    if (!cart.paymentMethod) {
-        props.history.push("/payment");
-    }
-
-    const orderCreate = useSelector((state) => state.orderCreate);
-    const { loading, success, error, order } = orderCreate;
-
-    const toPrice = (num) => Number(num.toFixed(2));
-    cart.itemsPrice = toPrice(
-        cart.cartItems.reduce((a, b) => a + b.qty * b.price, 0)
-    );
-
-    cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-    cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
-    cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
-
+const OrderPage = (props) => {
+    const orderId = props.match.params.id;
+    const orderDetails = useSelector((state) => state.orderDetails);
+    const { order, loading, error } = orderDetails;
     const dispatch = useDispatch();
 
-    const handleOrderItems = () => {
-        dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
-    };
-
     useEffect(() => {
-        if (success) {
-            props.history.push("/order/" + order._id)
-            dispatch({ type: CREATE_ORDER_RESET })
-        }
-    }, [dispatch, order, props.history, success]);
+        dispatch(detailsOrder(orderId));
+    }, [dispatch, orderId]);
 
-    return (
+    return loading ? (
+        <LoadingBox />
+    ) : error ? (
+        <ErrorMessage variant='danger'>{error}</ErrorMessage>
+    ) : (
         <div>
-            <CheckOutSteps step1 step2 step3 step4 />
+            <h1>Order {order._id}</h1>
             <div className='row top'>
                 <div className='col-2'>
                     <ul>
@@ -56,13 +30,22 @@ const PlaceHolderPage = (props) => {
                                 <h2>Shipping</h2>
                                 <p>
                                     <strong>Name: </strong>
-                                    {cart.shippingAddress.fullName} <br />
+                                    {order.shippingAddress.fullName} <br />
                                     <strong>Address: </strong>
-                                    {cart.shippingAddress.address},{" "}
-                                    {cart.shippingAddress.city},{" "}
-                                    {cart.shippingAddress.postCode},{" "}
-                                    {cart.shippingAddress.country}
+                                    {order.shippingAddress.address},{" "}
+                                    {order.shippingAddress.city},{" "}
+                                    {order.shippingAddress.postCode},{" "}
+                                    {order.shippingAddress.country}
                                 </p>
+                                {order.isDelivered ? (
+                                    <ErrorMessage variant='success'>
+                                        Delivered {order.deliveredAt}
+                                    </ErrorMessage>
+                                ) : (
+                                    <ErrorMessage variant='danger'>
+                                        Not delivered
+                                    </ErrorMessage>
+                                )}
                             </div>
                         </li>
                         <li>
@@ -70,15 +53,24 @@ const PlaceHolderPage = (props) => {
                                 <h2>Payment method</h2>
                                 <p>
                                     <strong>Name:</strong>
-                                    {cart.paymentMethod}
+                                    {order.paymentMethod}
                                 </p>
+                                {order.isPaid ? (
+                                    <ErrorMessage variant='success'>
+                                        Paid {order.paidAt}
+                                    </ErrorMessage>
+                                ) : (
+                                    <ErrorMessage variant='danger'>
+                                        Not Paid
+                                    </ErrorMessage>
+                                )}
                             </div>
                         </li>
                         <li>
                             <div className='card card-body'>
                                 <h2>Items Order</h2>
                                 <ul>
-                                    {cart.cartItems.map((item) => (
+                                    {order.orderItems.map((item) => (
                                         <li key={item.product}>
                                             <div className='row'>
                                                 <div>
@@ -116,19 +108,19 @@ const PlaceHolderPage = (props) => {
                             <li>
                                 <div className='row'>
                                     <div>Items</div>
-                                    <div>${cart.itemsPrice.toFixed(2)}</div>
+                                    <div>${order.itemsPrice.toFixed(2)}</div>
                                 </div>
                             </li>{" "}
                             <li>
                                 <div className='row'>
                                     <div>Shipping</div>
-                                    <div>${cart.shippingPrice.toFixed(2)}</div>
+                                    <div>${order.shippingPrice.toFixed(2)}</div>
                                 </div>
                             </li>{" "}
                             <li>
                                 <div className='row'>
                                     <div>Tax</div>
-                                    <div>${cart.taxPrice.toFixed(2)}</div>
+                                    <div>${order.taxPrice.toFixed(2)}</div>
                                 </div>
                             </li>{" "}
                             <li>
@@ -138,27 +130,11 @@ const PlaceHolderPage = (props) => {
                                     </div>
                                     <div>
                                         <strong>
-                                            ${cart.totalPrice.toFixed(2)}
+                                            ${order.totalPrice.toFixed(2)}
                                         </strong>
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <button
-                                    type='button'
-                                    disabled={cart.cartItems.length === 0}
-                                    className='primary block'
-                                    onClick={handleOrderItems}
-                                >
-                                    Place Order
-                                </button>
-                            </li>
-                            {loading && <LoadingBox />}
-                            {error && (
-                                <ErrorMessage variant='danger'>
-                                    {error}
-                                </ErrorMessage>
-                            )}
                         </ul>
                     </div>
                 </div>
@@ -167,4 +143,4 @@ const PlaceHolderPage = (props) => {
     );
 };
 
-export default PlaceHolderPage;
+export default OrderPage;
