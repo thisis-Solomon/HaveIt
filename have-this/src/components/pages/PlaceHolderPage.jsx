@@ -1,19 +1,27 @@
 import CheckOutSteps from "../CheckOutSteps";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { createOrder } from "../actions/orderActions";
+import { useEffect } from "react";
+import { CREATE_ORDER_RESET } from "../../constants/orderConstants";
+import ErrorMessage from "../messages/ErrorMessage";
+import LoadingBox from "../messages/LoadingBox";
 
 const PlaceHolderPage = (props) => {
     const cart = useSelector((state) => state.cart);
     const userSignin = useSelector((state) => state.userSignin);
-    const { userInfo } = userSignin;
+    // const { userInfo } = userSignin;
 
-    if (!userInfo) {
-        props.history.push("/signin");
-    }
+    // if (!userInfo) {
+    //     props.history.push("/signin");
+    // }
 
     if (!cart.paymentMethod) {
         props.history.push("/payment");
     }
+
+    const orderCreate = useSelector((state) => state.orderCreate);
+    const { loading, success, error, order } = orderCreate;
 
     const toPrice = (num) => Number(num.toFixed(2));
     cart.itemsPrice = toPrice(
@@ -24,9 +32,18 @@ const PlaceHolderPage = (props) => {
     cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
     cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
+    const dispatch = useDispatch();
+
     const handleOrderItems = () => {
-        // dispatch order items
-    }
+        dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
+    };
+
+    useEffect(() => {
+        if (success) {
+            props.history.push("/order/" + order._id)
+            dispatch({ type: CREATE_ORDER_RESET })
+        }
+    }, [dispatch, order, props.history, success]);
 
     return (
         <div>
@@ -120,7 +137,9 @@ const PlaceHolderPage = (props) => {
                                         <strong>Total Cost of Items</strong>
                                     </div>
                                     <div>
-                                        <strong>${cart.totalPrice.toFixed(2)}</strong>
+                                        <strong>
+                                            ${cart.totalPrice.toFixed(2)}
+                                        </strong>
                                     </div>
                                 </div>
                             </li>
@@ -134,6 +153,12 @@ const PlaceHolderPage = (props) => {
                                     Place Order
                                 </button>
                             </li>
+                            {loading && <LoadingBox />}
+                            {error && (
+                                <ErrorMessage variant='danger'>
+                                    {error}
+                                </ErrorMessage>
+                            )}
                         </ul>
                     </div>
                 </div>

@@ -26,8 +26,7 @@ export const isAuth = (req, res, next) => {
                 next();
             }
         });
-    } else{
+    } else {
         res.status(401).send({ message: "No Token" });
-
     }
 };

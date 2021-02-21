@@ -19,8 +19,8 @@ orderRoute.post(
                 itemsPrice: req.body.itemsPrice,
                 shippingPrice: req.body.shippingPrice,
                 taxPrice: req.body.taxPrice,
-                totalsPrice: req.body.totalsPrice,
-                user: req.body._id,
+                totalPrice: req.body.totalPrice,
+                user: req.user._id,
             });
 
             const createdOrder = await order.save();
